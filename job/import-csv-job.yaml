@@ -1,0 +1,31 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: mongo-data-import
+spec:
+  template:
+    spec:
+      containers:
+      - name: mongoexport-import
+        image: mongo:4.2
+        command: ["/bin/sh", "-c"]
+        args:
+          - |
+            mongoexport --uri=mongodb+srv://roni:233212rr@cluster0.eldw7p4.mongodb.net/sample_training --collection=posts --type=csv --fields=_id,body,permalink,author,title,tags,comments,date --out=/data/dump.csv &&
+            mongoimport --host=mongodb-service.default.svc.cluster.local --db sample_training --collection posts --type csv --headerline --file /data/dump.csv
+        volumeMounts:
+        - name: dump-storage
+          mountPath: /data
+      - name: curl-express-api
+        image: curlimages/curl:7.79.1
+        command: ["/bin/sh", "-c"]
+        args:
+          - |
+            sleep 5 && 
+            curl -X POST -H "Content-Type: application/json" -d '{"title":"FROM JOB","body":"FROM JOB."}' http://mongodb-express-rest-api-pod.default.svc.cluster.local:80/posts
+            curl http://mongodb-express-rest-api-pod.default.svc.cluster.local:80/posts 
+      volumes:
+      - name: dump-storage
+        persistentVolumeClaim:
+          claimName: mongodb-dump-pvc
+      restartPolicy: Never
