@@ -13,6 +13,6 @@ spec:
       - apt-get update && apt-get install -y git &&
         git clone https://github.com/mongodb-developer/mongodb-express-rest-api-example.git &&
         cd mongodb-express-rest-api-example/server &&
-        echo "ATLAS_URI=mongodb+srv://roni:233212rr@cluster0.eldw7p4.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0" > .env &&
+        echo "ATLAS_URI=mongodb+srv://xxx" > .env &&
         npm install &&
         npm run dev
