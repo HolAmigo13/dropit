@@ -11,7 +11,7 @@ spec:
         command: ["/bin/sh", "-c"]
         args:
           - |
-            mongoexport --uri=mongodb+srv://roni:233212rr@cluster0.eldw7p4.mongodb.net/sample_training --collection=posts --type=csv --fields=_id,body,permalink,author,title,tags,comments,date --out=/data/dump.csv &&
+            mongoexport --uri=mongodb+srv://xxx --collection=posts --type=csv --fields=_id,body,permalink,author,title,tags,comments,date --out=/data/dump.csv &&
             mongoimport --host=mongodb-service.default.svc.cluster.local --db sample_training --collection posts --type csv --headerline --file /data/dump.csv
         volumeMounts:
         - name: dump-storage
