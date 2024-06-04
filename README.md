@@ -2,7 +2,7 @@
 curl -sfL https://get.k3s.io | sh -
 
 
-#Deploy front (React) and Backend (Express) 
+#Deploy front (React) and Backend (Express)
 kubectl apply -f app/backend.yaml
 kubectl apply -f fapp/frontend.yaml
 kubectl expose deployment/express-rest-api-deployment --port=80 --target-port=5050
@@ -25,6 +25,6 @@ kubectl apply -f db-dump/pvc-dump-store.yaml
 
 
 #Important notes:
-*The React app runs on the browser means, if you want to configure the service name in           "config.js" (to avoid re-conifuring the node IP + port with each deployment) add the service name in /etc/hosts
+*The React app runs on the browser means, if you want to configure the service name in "app/config.js" (to avoid re-configuring the node IP with each deployment) add the service name in /etc/hosts.
 
 
