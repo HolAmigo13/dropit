@@ -1,5 +1,5 @@
 # Deploy scirpt:
-  chmod +x start.sh 
+  chmod +x start.sh &&
   ./start.sh
 
 # Install k3s single node:
