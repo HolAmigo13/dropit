@@ -1,5 +1,4 @@
 #Install k3s single node:
-
 curl -sfL https://get.k3s.io | sh -
 
 
