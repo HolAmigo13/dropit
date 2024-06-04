@@ -6,8 +6,11 @@ curl -sfL https://get.k3s.io | sh -
 #Deploy front (React) and Backend (Express):
 
 kubectl apply -f app/backend.yaml
+
 kubectl apply -f fapp/frontend.yaml
+
 kubectl expose deployment/express-rest-api-deployment --port=80 --target-port=5050
+
 kubectl expose deployment/frontend-deployment --port=80 --target-port=3000
 
 #Deploy Nginx:
