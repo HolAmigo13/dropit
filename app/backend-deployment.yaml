@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: express-rest-api-deployment
+  labels:
+    app: backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+      - name: backend
+        image: node:16
+        command: ["/bin/sh", "-c"]
+        args:
+          - apt-get update && apt-get install -y git &&
+            git clone https://github.com/mongodb-developer/mongodb-express-rest-api-example.git &&
+            cd mongodb-express-rest-api-example/server &&
+            echo "ATLAS_URI=mongodb+srv://$(username):$(password)@cluster0.eldw7p4.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0" > .env &&
+            npm install &&
+            npm run dev
+        envFrom:
+          - secretRef:
+              name: mongo-credentials

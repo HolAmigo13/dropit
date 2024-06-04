@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend-deployment
+  labels:
+    app: frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+      - name: frontend-container
+        image: node:16
+        command: ["/bin/sh", "-c"]
+        args:
+          - git clone https://github.com/mongodb-developer/mongodb-express-rest-api-example.git &&
+            cd mongodb-express-rest-api-example/app &&
+            echo 'export const baseUrl = "http://mongodb-express-rest-api-pod.default.svc.cluster.local";' > src/config.js &&
+            npm install &&
+            npm start
